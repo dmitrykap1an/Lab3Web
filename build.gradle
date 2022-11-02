@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.20'
+    id 'org.jetbrains.kotlin.plugin.allopen' version '1.6.20'
+    id 'org.jetbrains.kotlin.plugin.noarg' version '1.6.20'
+    id 'war'
+}
+
+group 'beans'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.9.0'
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+[compileKotlin, compileTestKotlin].forEach {
+    it.kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+allOpen {
+    annotation('jakarta.persistence.Entity')
+    annotation('jakarta.persistence.Embeddable')
+    annotation('jakarta.persistence.MappedSuperclass')
+}
+
+noArg {
+    annotation('jakarta.persistence.Entity')
+    annotation('jakarta.persistence.Embeddable')
+    annotation('jakarta.persistence.MappedSuperclass')
+}
+
+dependencies {
+    implementation('jakarta.faces:jakarta.faces-api:4.0.1')
+    implementation('org.hibernate:hibernate-entitymanager:5.6.12.Final')
+    implementation('jakarta.platform:jakarta.jakartaee-web-api:10.0.0')
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
