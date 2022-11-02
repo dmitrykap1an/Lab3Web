@@ -6,7 +6,7 @@
     <managed-bean>
         <managed-bean-name>testBean</managed-bean-name>
         <managed-bean-class>beans.TestBean</managed-bean-class>
-        <managed-bean-scope>all</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
         <managed-property>
             <property-name>name</property-name>
             <value>#{testBean.name}</value>

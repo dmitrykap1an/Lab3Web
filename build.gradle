@@ -43,9 +43,9 @@ noArg {
 }
 
 dependencies {
-    implementation('jakarta.faces:jakarta.faces-api:4.0.1')
+    implementation('jakarta.faces:jakarta.faces-api:2.3.1')
     implementation('org.hibernate:hibernate-entitymanager:5.6.12.Final')
-    implementation('jakarta.platform:jakarta.jakartaee-web-api:10.0.0')
+    implementation('jakarta.platform:jakarta.jakartaee-web-api:9.1.0')
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")

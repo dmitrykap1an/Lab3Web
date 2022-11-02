@@ -10,7 +10,7 @@ class TestBean: Serializable{
     companion object{
         private val serialVersionUID = 1L
     }
-    private var name: String? = null
+    private var name: String? = "aboba"
     private var age: Int? = null
 
     fun setName(name: String){
