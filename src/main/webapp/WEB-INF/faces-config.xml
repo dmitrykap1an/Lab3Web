@@ -6,13 +6,11 @@
     <managed-bean>
         <managed-bean-name>testBean</managed-bean-name>
         <managed-bean-class>beans.TestBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-        <managed-property>
-            <property-name>name</property-name>
-            <value>#{testBean.name}</value>
-        </managed-property>
+        <managed-bean-scope>application</managed-bean-scope>
     </managed-bean>
-    <navigation-rule>
-        <from-view-id>/index.xhtml</from-view-id>
-    </navigation-rule>
+    <managed-bean>
+        <managed-bean-name>myBean</managed-bean-name>
+        <managed-bean-class>beans.MyBean</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
 </faces-config>

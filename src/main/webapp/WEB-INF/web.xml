@@ -9,6 +9,7 @@
     <servlet>
         <servlet-name>facesServlet</servlet-name>
         <servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>5</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>facesServlet</servlet-name>

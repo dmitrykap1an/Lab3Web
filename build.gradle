@@ -30,20 +30,9 @@ tasks.withType(JavaCompile) {
     }
 }
 
-allOpen {
-    annotation('jakarta.persistence.Entity')
-    annotation('jakarta.persistence.Embeddable')
-    annotation('jakarta.persistence.MappedSuperclass')
-}
-
-noArg {
-    annotation('jakarta.persistence.Entity')
-    annotation('jakarta.persistence.Embeddable')
-    annotation('jakarta.persistence.MappedSuperclass')
-}
 
 dependencies {
-    implementation('jakarta.faces:jakarta.faces-api:2.3.1')
+    implementation('jakarta.faces:jakarta.faces-api:4.0.1')
     implementation('org.hibernate:hibernate-entitymanager:5.6.12.Final')
     implementation('jakarta.platform:jakarta.jakartaee-web-api:9.1.0')
 

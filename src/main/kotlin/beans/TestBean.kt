@@ -1,8 +1,5 @@
 package beans
 
-import jakarta.annotation.ManagedBean
-import jakarta.enterprise.context.RequestScoped
-import jakarta.enterprise.context.SessionScoped
 import java.io.Serializable
 
 class TestBean: Serializable{

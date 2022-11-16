@@ -131,3 +131,16 @@ th{
   border: 3px solid black;
   margin: 40px;
 }
+
+.clock-container{
+  background-color: white;
+  border-radius: 10px;
+  width: 400px;
+  margin-left: 598px;
+}
+#clock{
+  border: 4px;
+  text-align: center;
+  text-decoration-color: black;
+  padding:5px 20px;
+}
