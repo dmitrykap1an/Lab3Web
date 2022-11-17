@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="WEB-INF/templates/template.xhtml">
+
+   <ui:define name="head">
+      <h:outputStylesheet name="css/styles.css"/>
+      <title>Основная страница</title>
+   </ui:define>
+   <ui:define name="main">
+      <div class="container">
+         <div class="input-data">
+            <div>
+               <div class="block_description">Выбор X</div>
+               <label> -3 </label><input type="radio" id="x_button1" value="-3" class="x_button" name="x"/>
+               <label> -2 </label><input type="radio" id="x_button2" value="-2" class="x_button" name="x"/>
+               <label> -1</label><input type="radio" id="x_button3" value="-1" class="x_button" name="x"/>
+               <label> 0</label><input type="radio" id="x_button4" value="0" class="x_button" name="x"/>
+               <label> 1</label><input type="radio" id="x_button5" value="1" class="x_button" name="x"/>
+               <label> 2</label><input type="radio" id="x_button6" value="2" class="x_button" name="x"/>
+               <label>3</label><input type="radio" id="x_button7" value="3" class="x_button" name="x"/>
+               <label>4</label><input type="radio" id="x_button8" value="4" class="x_button" name="x"/>
+               <label>5</label><input type="radio" id="x_button9" value="5" class="x_button" name="x"/>
+            </div>
+            <hr/>
+            <div>
+               <div class="block_description">Выбор Y</div>
+               <div class="error">
+                  <label for="y-text">Изменение Y:</label>
+                  <input type="text" name="y" id="y-text" class="y_text"/>
+               </div>
+            </div>
+            <hr/>
+            <div>
+               <div class="block_description">Выбор R</div>
+               <div>
+                  <label>1</label>1<input type="radio" name="r" id="choice_check1" value="1" class="r-button"/>
+                  <label>1.5</label><input type="radio" name="r" id="choice_check2" value="1.5" class="r-button"/>
+                  <label>2</label><input type="radio" name="r" id="choice_check3" value="2" class="r-button"/>
+                  <label>2.5</label><input type="radio" name="r" id="choice_check4" value="2.5" class="r-button"/>
+                  <label>3</label><input type="radio" name="r" id="choice_check5" value="3" class="r-button"/>
+
+               </div>
+               <div>
+                  <input type="hidden" name="real_x" value=" " id="hidden_x"/>
+                  <input type="hidden" name="real_r" value=" " id="hidden_r"/>
+               </div>
+            </div>
+            <div id="form">
+               <input type="submit" value="Отправить" id="submit_button"  name="submit" class="submit"/>
+            </div>
+         </div>
+         <div class="input-image img">
+            <p class="align_center">
+               <canvas id="area" height="280" width="400"/>
+            </p>
+            <h:outputScript name="js/canvas.js"/>
+         </div>
+      </div>
+      <div>
+         <table class="my_table">
+            <thead>
+            <tr>
+               <th>X</th>
+               <th>Y</th>
+               <th>R</th>
+               <th>Выполнение</th>
+               <th>Время запроса</th>
+               <th>Время выполнения</th>
+            </tr>
+            </thead>
+            <tbody id="result">
+            </tbody>
+         </table>
+      </div>
+   </ui:define>
+</ui:composition>
+</html>

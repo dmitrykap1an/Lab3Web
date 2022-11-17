@@ -10,24 +10,15 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
-    <h:outputStylesheet name="css/index.css"/>
+    <h:outputStylesheet name="css/styles.css"/>
+
 </h:head>
 
 <h:body>
     <div class="clock-container">
         <p id="clock"/>
     </div>
-
-    <h:outputScript name="js/time.js"/>
-    <h1 class="title">Лабораторная работа №3</h1>
-    <div>
-        <div class="student_info">
-            <p class="margin_text"><b>Работу выполнил</b>: Каплан Дмитрий Денисович</p>
-            <p class="margin_text"><b>Группа</b>: 32131</p>
-            <p class="margin_text"><b>Вариант</b>: 13153</p>
-        </div>
-    </div>
-    <ui:insert name="main"/>
+    <ui:insert name="main">Основное содержимое страницы</ui:insert>
     <h:outputScript name="js/time.js"/>
 </h:body>
 
