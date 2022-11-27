@@ -14,70 +14,82 @@
    </ui:define>
    <ui:define name="main">
       <div class="container">
-         <div class="input-data">
+         <h:form class="input-data">
             <div>
                <div class="block_description">Выбор X</div>
-               <label> -3 </label><input type="radio" id="x_button1" value="-3" class="x_button" name="x"/>
-               <label> -2 </label><input type="radio" id="x_button2" value="-2" class="x_button" name="x"/>
-               <label> -1</label><input type="radio" id="x_button3" value="-1" class="x_button" name="x"/>
-               <label> 0</label><input type="radio" id="x_button4" value="0" class="x_button" name="x"/>
-               <label> 1</label><input type="radio" id="x_button5" value="1" class="x_button" name="x"/>
-               <label> 2</label><input type="radio" id="x_button6" value="2" class="x_button" name="x"/>
-               <label>3</label><input type="radio" id="x_button7" value="3" class="x_button" name="x"/>
-               <label>4</label><input type="radio" id="x_button8" value="4" class="x_button" name="x"/>
-               <label>5</label><input type="radio" id="x_button9" value="5" class="x_button" name="x"/>
+               <!--                  <h:outputLabel>-->
+               <!--                  </h:outputLabel>-->
+               <h:selectOneRadio styleClass="selectX" value="#{requests.dataBean.x}" id="selectX">
+                  <f:selectItem itemLabel="-3" itemValue="-3"/>
+                  <f:selectItem itemLabel="-2" itemValue="-2"/>
+                  <f:selectItem itemLabel="-1" itemValue="-1"/>
+                  <f:selectItem itemLabel="0" itemValue="0"/>
+                  <f:selectItem itemLabel="1" itemValue="1"/>
+                  <f:selectItem itemLabel="2" itemValue="2"/>
+                  <f:selectItem itemLabel="3" itemValue="3"/>
+                  <f:selectItem itemLabel="4" itemValue="4"/>
+                  <f:selectItem itemLabel="5" itemValue="5"/>
+                  <h:message for="selectX" style="color:red"/>
+                  <f:validateRequired/>
+               </h:selectOneRadio>
             </div>
             <hr/>
             <div>
                <div class="block_description">Выбор Y</div>
-               <div class="error">
-                  <label for="y-text">Изменение Y:</label>
-                  <input type="text" name="y" id="y-text" class="y_text"/>
+               <div>
+                  <h:outputLabel value="Y: "/>
+                  <h:inputText id="y-text" maxlength="5" autocomplete="off" value="#{requests.dataBean.y}">
+                     <f:validateRequired/>
+                     <f:validateDoubleRange minimum="-5" maximum="5"/>
+                  </h:inputText>
                </div>
             </div>
             <hr/>
             <div>
                <div class="block_description">Выбор R</div>
-               <div>
-                  <label>1</label>1<input type="radio" name="r" id="choice_check1" value="1" class="r-button"/>
-                  <label>1.5</label><input type="radio" name="r" id="choice_check2" value="1.5" class="r-button"/>
-                  <label>2</label><input type="radio" name="r" id="choice_check3" value="2" class="r-button"/>
-                  <label>2.5</label><input type="radio" name="r" id="choice_check4" value="2.5" class="r-button"/>
-                  <label>3</label><input type="radio" name="r" id="choice_check5" value="3" class="r-button"/>
-
-               </div>
+               <h:selectOneRadio styleClass="selectY" value="#{requests.dataBean.r}">
+                  <f:selectItem itemLabel="1" itemValue="1" id="r-radio1"/>
+                  <f:selectItem itemLabel="1.5" itemValue="1.5" id="r-radio2"/>
+                  <f:selectItem itemLabel="2" itemValue="2" id="r-radio3"/>
+                  <f:selectItem itemLabel="2.5" itemValue="2.5" id="r-radio4"/>
+                  <f:selectItem itemLabel="3" itemValue="3" id="r-radio5"/>
+                  <f:validateRequired/>
+               </h:selectOneRadio>
                <div>
                   <input type="hidden" name="real_x" value=" " id="hidden_x"/>
                   <input type="hidden" name="real_r" value=" " id="hidden_r"/>
                </div>
             </div>
             <div id="form">
-               <input type="submit" value="Отправить" id="submit_button"  name="submit" class="submit"/>
+               <h:commandButton value="Отправить" action="#{requests.addData()}"/>
+               <!--               <input type="submit" value="Отправить" id="submit_button"  name="submit" class="submit"/>-->
             </div>
-         </div>
+         </h:form>
          <div class="input-image img">
             <p class="align_center">
                <canvas id="area" height="280" width="400"/>
             </p>
-            <h:outputScript name="js/canvas.js"/>
          </div>
       </div>
       <div>
          <table class="my_table">
             <thead>
             <tr>
-               <th>X</th>
-               <th>Y</th>
-               <th>R</th>
-               <th>Выполнение</th>
-               <th>Время запроса</th>
-               <th>Время выполнения</th>
+               <th class="tdStyle thStyle">X</th>
+               <th class="tdStyle thStyle">Y</th>
+               <th class="tdStyle thStyle">R</th>
+               <th class="tdStyle thStyle">Выполнение</th>
+               <th class="tdStyle thStyle">Время запроса</th>
+               <th class="tdStyle thStyle">Время выполнения</th>
             </tr>
             </thead>
             <tbody id="result">
             </tbody>
          </table>
       </div>
+      <h:outputScript name="js/canvas.js"/>
+      <h:outputScript name="js/mouseEvent.js"/>
+      <h:outputScript name="js/index.js"/>
    </ui:define>
 </ui:composition>
 </html>

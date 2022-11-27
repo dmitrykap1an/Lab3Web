@@ -81,14 +81,14 @@ body {
   overflow: hidden;
 
 }
-td, th {
+.tdStyle {
   padding: 3px;
   border-style: solid;
   border-width: 0 1px 1px 0;
   border-color: white;
   background-color: #0f75de;
 }
-th{
+.thStyle{
   background: white;
   text-shadow: 0 1px 1px #2D2020;
   padding: 10px 20px;
@@ -97,7 +97,6 @@ th{
 .x_button {
   cursor: pointer;
   font-size: 20px;
-  border-color: red;
 }
 
 
@@ -139,4 +138,12 @@ th{
   text-align: center;
   text-decoration-color: black;
   padding:5px 20px;
+}
+
+.selectX{
+  margin-left: 10%
+}
+
+.selectY{
+  margin-left: 27%
 }
