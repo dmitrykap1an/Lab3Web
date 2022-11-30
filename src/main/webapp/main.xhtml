@@ -17,9 +17,7 @@
          <h:form class="input-data">
             <div>
                <div class="block_description">Выбор X</div>
-               <!--                  <h:outputLabel>-->
-               <!--                  </h:outputLabel>-->
-               <h:selectOneRadio styleClass="selectX" value="#{requests.dataBean.x}" id="selectX">
+               <h:selectOneRadio styleClass="selectX" value="#{requests.dataBean.x}" id="x-select">
                   <f:selectItem itemLabel="-3" itemValue="-3"/>
                   <f:selectItem itemLabel="-2" itemValue="-2"/>
                   <f:selectItem itemLabel="-1" itemValue="-1"/>
@@ -29,7 +27,6 @@
                   <f:selectItem itemLabel="3" itemValue="3"/>
                   <f:selectItem itemLabel="4" itemValue="4"/>
                   <f:selectItem itemLabel="5" itemValue="5"/>
-                  <h:message for="selectX" style="color:red"/>
                   <f:validateRequired/>
                </h:selectOneRadio>
             </div>
@@ -39,15 +36,15 @@
                <div>
                   <h:outputLabel value="Y: "/>
                   <h:inputText id="y-text" maxlength="5" autocomplete="off" value="#{requests.dataBean.y}">
-                     <f:validateRequired/>
                      <f:validateDoubleRange minimum="-5" maximum="5"/>
+                     <f:validateRequired/>
                   </h:inputText>
                </div>
             </div>
             <hr/>
             <div>
                <div class="block_description">Выбор R</div>
-               <h:selectOneRadio styleClass="selectY" value="#{requests.dataBean.r}">
+               <h:selectOneRadio styleClass="selectY" value="#{requests.dataBean.r}" id="r-select">
                   <f:selectItem itemLabel="1" itemValue="1" id="r-radio1"/>
                   <f:selectItem itemLabel="1.5" itemValue="1.5" id="r-radio2"/>
                   <f:selectItem itemLabel="2" itemValue="2" id="r-radio3"/>
@@ -62,7 +59,6 @@
             </div>
             <div id="form">
                <h:commandButton value="Отправить" action="#{requests.addData()}"/>
-               <!--               <input type="submit" value="Отправить" id="submit_button"  name="submit" class="submit"/>-->
             </div>
          </h:form>
          <div class="input-image img">
