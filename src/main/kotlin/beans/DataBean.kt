@@ -1,24 +1,25 @@
 package beans
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.SequenceGenerator
+import jakarta.persistence.*
 import java.io.Serializable
 
-@Entity
+@Entity(name = "DataBean")
+@Table(name = "datatable")
 class DataBean: Serializable{
 
     @Id
     @SequenceGenerator(name = "jpaSequence", sequenceName = "JPA_SEQUENCE", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
-    private var id = 0
+    private var id = 1;
 
+    @Column(name = "x")
     private var x: Double? = null;
+    @Column(name = "y")
     private var y: Double? = null
+    @Column(name = "r")
     private var r: Double? = null
-    private var hitResult: String? = null
+    @Column(name = "hitresult")
+    private var hitResult: Boolean? = null
     
     fun getX() =
         x;
@@ -29,15 +30,15 @@ class DataBean: Serializable{
     fun getR() =
         r;
 
-    fun setX(x: String){
-        this.x = x.toDouble();
+    fun setX(x: Double?){
+        this.x = x;
     }
 
-    fun setY(y: Double){
+    fun setY(y: Double?){
         this.y = y;
     }
 
-    fun setR(r: Double){
+    fun setR(r: Double?){
         this.r = r;
     }
 
@@ -48,7 +49,7 @@ class DataBean: Serializable{
     }
 
     fun checkHit() {
-        hitResult = if (checkSuccess()) "Попадание" else "Промах"
+        hitResult = checkSuccess()
     }
 
     fun getId(): Int {
@@ -59,11 +60,11 @@ class DataBean: Serializable{
         this.id = id
     }
 
-    fun getHitResult(): String? {
+    fun getHitResult(): Boolean? {
         return hitResult
     }
 
-    fun setHitResult(hitResult: String?) {
+    fun setHitResult(hitResult: Boolean) {
         this.hitResult = hitResult
     }
     

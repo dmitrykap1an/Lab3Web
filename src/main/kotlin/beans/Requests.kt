@@ -4,15 +4,10 @@ import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Named
 import jakarta.persistence.*
 import java.io.Serializable
-import java.lang.NullPointerException
-import java.sql.DriverManager
 
 @Named("requests")
 @ApplicationScoped
 class Requests: Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private var id: Int = 1;
 
     private val persistenceUnit = "Web3"
     private var dataBean: DataBean = DataBean();
@@ -32,21 +27,21 @@ class Requests: Serializable {
         transaction = entityManager!!.transaction
     }
 
-    private fun loadData() {
-        try {
-            transaction!!.begin()
-            val query: Query = entityManager!!.createQuery("SELECT e FROM DataBean e")
-            list = query.resultList as MutableList<DataBean>
-            transaction!!.commit()
-        } catch (e : RuntimeException) {
-            if (transaction!!.isActive) {
-                transaction!!.rollback()
+        private fun loadData() {
+            try {
+                transaction!!.begin()
+                val query: Query = entityManager!!.createQuery("SELECT u FROM DataBean u")
+                list = query.resultList as MutableList<DataBean>
+                transaction!!.commit()
+            } catch (e : RuntimeException) {
+                if (transaction!!.isActive) {
+                    transaction!!.rollback()
+                }
+                throw e
             }
-            throw e
         }
-    }
 
-    fun addData(): String{
+    fun addData(){
         try {
             transaction!!.begin()
             dataBean.checkHit()
@@ -54,13 +49,12 @@ class Requests: Serializable {
             list.add(dataBean)
             dataBean = DataBean()
             transaction!!.commit()
-        } catch (exception: RuntimeException) {
+        } catch (e: RuntimeException) {
             if (transaction!!.isActive) {
                 transaction!!.rollback()
             }
-            throw exception
+            throw e
         }
-        return "redirect"
     }
 
     fun clearData(): String{
