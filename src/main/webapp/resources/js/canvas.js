@@ -57,4 +57,15 @@ function drawGraph(){
 
 drawGraph()
 
+function addDots(x, y, r, matched){
+    let coordinateX = x > 5 || x < -3? x: x >= 0? 200 + (x * 120)/r: 200 + (x * 120)/r
+    let coordinateY = y > 5 || y < -5 ? y:  y >= 0? 140 - (y * 120)/r: 140 - (y * 120)/r
+    ctx.fillStyle = matched ? "green" : "red";
+    ctx.fillRect(coordinateX, coordinateY, 2, 2)
+}
+
+let clearCanvas = function (){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 

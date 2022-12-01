@@ -1,13 +1,17 @@
 document.getElementById("area").onmouseup = function (event){
-    let r = checkR()
-    if(r.status){
-        let x = (r.value * (event.offsetX - 200)/120).toFixed(3)
-        let y = (r.value * (140 - event.offsetY)/120).toFixed(3)
-        sendRequest(x, y, r.value)
+        let r = checkR()
+        if(r.status) {
+                let x = parseFloat((r.val * (event.offsetX - 200) / 120).toFixed(3))
+                let y = parseFloat((r.val * (140 - event.offsetY) / 120).toFixed(3))
+                document.getElementById("j_idt47:hidden-x").value = x
+                document.getElementById("j_idt47:hidden-y").value = y
+                document.getElementById("j_idt47:hidden-r").value = r.val
+                document.getElementById("j_idt47:hidden-form").click()
 
-    }
-    else{
-        alert("Выберете число R")
-    }
+                chooseGraph(x, y, r.val)
+        }
+        else{
+                alert("Выберете число R")
+        }
 
 }

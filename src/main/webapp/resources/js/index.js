@@ -1,9 +1,13 @@
-const xButtons = document.querySelectorAll(".x_button"),
-    rButtons = document.querySelectorAll(".r-button"),
-    yButton = document.querySelector(".y_text"),
-    form = document.getElementById("form"),
-    table = document.querySelector(".my_table"),
-    tbody = table.getElementsByTagName("tbody")[0];
+const xButtons = [document.getElementById("j_idt8:x-select:0"), document.getElementById("j_idt8:x-select:1"),
+        document.getElementById("j_idt8:x-select:2"), document.getElementById("j_idt8:x-select:3"),
+        document.getElementById("j_idt8:x-select:4"), document.getElementById("j_idt8:x-select:5"),
+        document.getElementById("j_idt8:x-select:6"), document.getElementById("j_idt8:x-select:7"),
+        document.getElementById("j_idt8:x-select:8")],
+    rButtons = [document.getElementById("j_idt8:r-select:0"), document.getElementById("j_idt8:r-select:1"),
+        document.getElementById("j_idt8:r-select:2"), document.getElementById("j_idt8:r-select:3"),
+        document.getElementById("j_idt8:r-select:4")]
+    yButton = document.getElementById("j_idt8:y-text")
+    form = document.getElementById("j_idt8:form")
 
 form.addEventListener("click",onsubmit);
 
@@ -13,31 +17,31 @@ function onsubmit(){
     let y = validateY()
     let r = checkR()
     let array = [x, y, r]
-    if(x.status && y.status && r.status){
-        sendRequest(x.value, y.value, r.value)
-    }
-    else{
+    if(!x.status || !y.status || !r.status){
         let errorString = ""
         array.forEach(function (input){
             if(!input.status){
                 errorString += input.errorMessage + "\n"
             }
         })
-
         alert(errorString)
     }
+    else{
+        chooseGraph(x, y, r.val)
+    }
+
     return false;
 }
 
 function validateY(){
     let yVal = yButton.value.replace(",", ".")
-    if(!isNaN(yVal)){
+    if(!isNaN(yVal) && yVal !== ""){
         return checkY(Number.parseFloat(yVal).toFixed(3))
     }
     else{
         return {
             status: false,
-            value: 404,
+            val: 404,
             errorMessage: "Y должен быть представлен числом"
         }
     }
@@ -47,14 +51,14 @@ function checkY(yVal){
     if(yVal >= -5 && yVal <= 5){
         return {
             status: true,
-            value: yVal,
+            val: yVal,
             errorMessage: ""
         }
     }
     else{
         return {
             status: false,
-            value: 404,
+            val: 404,
             errorMessage: "Число Y должно быть в промежутке от -5 до 3"
         }
     }
@@ -72,13 +76,13 @@ function checkX(){
     if(number === 404){
         return {
             status: false,
-            value: number,
+            val: number,
             errorMessage: "Выберете X!"
         }
     }
     else return {
         status: true,
-        value:  number,
+        val:  number,
         errorMessage: ""
     }
 
@@ -96,94 +100,27 @@ function checkR(){
     if(number === 404){
         return {
             status: false,
-            value: number,
+            val: number,
             errorMessage: "Выберете R!"
         }
     }
     else return {
         status: true,
-        value: number,
+        val: number,
         errorMessage: ""
     }
 }
 
-function getResponse(request){
-    const response = JSON.parse(request.response)
-    if(response.error){
-        alert(response.message)
-    }
-    else{
-       updateTable(response)
-    }
-
-
+let validateData = function (x, y, r){
+    return (x <= 0 && x >= -r && y  >= 0 && y  <= r /2) ||
+    (x  >= 0 && y  <= 0 && x  * x  + y  * y  <= (r /2) * (r /2)) ||
+    (y  >= -x  - r  && y  <= 0 && x  <= 0)
 }
 
-function updateTable(response){
-    addDots(response.x, response.y, response.R)
-    const row = document.createElement("tr");
-    const x = document.createElement("td");
-    const y = document.createElement("td");
-    const R = document.createElement("td");
-    const hit = document.createElement("td");
-    const request_time = document.createElement("td");
-    const timing = document.createElement("td");
-    x.innerHTML = response.x;
-    y.innerHTML = response.y;
-    R.innerHTML = response.R;
-    hit.innerHTML = response.result ? "Точка попала в область" : "Точка не попала в область";
-    request_time.innerHTML = response.serverTime;
-    timing.innerHTML = response.executeTime;
-    row.appendChild(x);
-    row.appendChild(y);
-    row.appendChild(R);
-    row.appendChild(hit);
-    row.appendChild(request_time);
-    row.appendChild(timing);
-    tbody.insertBefore(row, tbody.firstChild);
+let chooseGraph = function (x, y, r){
+    clearCanvas()
+    drawGraph()
+    parseTable(r)
+    let match = validateData(x,y, r)
+    addDots(x, y, r, match)
 }
-
-function sendRequest(x, y, R){
-
-    const path = "/controller-servlet?x=" + x + "&y=" + y + "&R=" + R
-    const request = new XMLHttpRequest()
-    request.open("POST", path, true)
-
-    request.onreadystatechange = () =>{
-        if(request.readyState === 4 && request.status === 200){
-            getResponse(request)
-        }
-    }
-    request.send()
-
-}
-
-function rebootRequest(){
-    const path = "/controller-servlet?reboot";
-    const request = new XMLHttpRequest();
-    request.open("POST", path, true);
-    request.onreadystatechange = () =>{
-        if(request.readyState === 4 && request.status === 200){
-            console.log("reboot")
-        }
-    }
-    request.send()
-}
-
-function addDots(x, y, r){
-    let coordinateX = x > 5 || x < -3? x: x >= 0? 200 + (x * 120)/r: 200 + (x * 120)/r
-    let coordinateY = y > 5 || y < -5 ? y:  y >= 0? 140 - (y * 120)/r: 140 - (y * 120)/r
-    drawCircle(coordinateX, coordinateY, 1, 0, 2*Math.PI)
-}
-
-function resetDots(request){
-    if(request !== undefined) {
-        request.forEach(function (data){
-            let dot = JSON.parse(data)
-            addDots(dot.x, dot.y, dot.R)
-        })
-    }
-}
-
-rebootRequest()
-
