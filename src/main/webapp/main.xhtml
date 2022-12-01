@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="WEB-INF/templates/template.xhtml">
 
@@ -17,7 +17,7 @@
          <h:form class="input-data">
             <div>
                <div class="block_description">Выбор X</div>
-               <h:selectOneRadio styleClass="selectX" value="#{requests.dataBean.x}" id="x-select">
+               <h:selectOneRadio styleClass="x-select" value="#{requests.dataBean.x}" id="x-select">
                   <f:selectItem itemLabel="-3" itemValue="-3"/>
                   <f:selectItem itemLabel="-2" itemValue="-2"/>
                   <f:selectItem itemLabel="-1" itemValue="-1"/>
@@ -44,7 +44,7 @@
             <hr/>
             <div>
                <div class="block_description">Выбор R</div>
-               <h:selectOneRadio styleClass="selectY" value="#{requests.dataBean.r}" id="r-select">
+               <h:selectOneRadio styleClass="r-select" value="#{requests.dataBean.r}" id="r-select">
                   <f:selectItem itemLabel="1" itemValue="1" id="r-radio1"/>
                   <f:selectItem itemLabel="1.5" itemValue="1.5" id="r-radio2"/>
                   <f:selectItem itemLabel="2" itemValue="2" id="r-radio3"/>
@@ -52,13 +52,11 @@
                   <f:selectItem itemLabel="3" itemValue="3" id="r-radio5"/>
                   <f:validateRequired/>
                </h:selectOneRadio>
-               <div>
-                  <input type="hidden" name="real_x" value=" " id="hidden_x"/>
-                  <input type="hidden" name="real_r" value=" " id="hidden_r"/>
-               </div>
             </div>
-            <div id="form">
-               <h:commandButton value="Отправить" action="#{requests.addData()}"/>
+            <div>
+               <h:commandButton value="Отправить" id="form">
+                  <f:ajax execute="@form" listener="#{requests.addData()}" render="table"/>
+               </h:commandButton>
             </div>
          </h:form>
          <div class="input-image img">
@@ -68,24 +66,51 @@
          </div>
       </div>
       <div>
-         <table class="my_table">
-            <thead>
-            <tr>
-               <th class="tdStyle thStyle">X</th>
-               <th class="tdStyle thStyle">Y</th>
-               <th class="tdStyle thStyle">R</th>
-               <th class="tdStyle thStyle">Выполнение</th>
-               <th class="tdStyle thStyle">Время запроса</th>
-               <th class="tdStyle thStyle">Время выполнения</th>
-            </tr>
-            </thead>
-            <tbody id="result">
-            </tbody>
-         </table>
+         <h:dataTable styleClass="my_table" value="#{requests.data}" var="data" id="table" >
+            <h:column headerClass="thStyle">
+               <f:facet name="header">X</f:facet>
+               <h:outputText value="#{data.x}" styleClass="x-result"/>
+            </h:column>
+            <h:column headerClass="thStyle">
+               <f:facet name="header">Y</f:facet>
+               <h:outputText value="#{data.y}" styleClass="y-result"/>
+            </h:column>
+            <h:column headerClass="thStyle">
+               <f:facet name="header">R</f:facet>
+               <h:outputText value="#{data.r}" styleClass="r-result"/>
+            </h:column>
+            <h:column headerClass="thStyle">
+               <f:facet name="header">Результат</f:facet>
+               <h:outputText value="#{data.hitResult? 'Точка попала в область' : 'Точка не попала в область'}" styleClass="hitResult"/>
+            </h:column>
+            <h:column headerClass="thStyle">
+               <f:facet name="header">Время выполения</f:facet>
+               <h:outputText value="#{data.executeTime} нс"/>
+            </h:column>
+            <h:column headerClass="thStyle">
+               <f:facet name="header">Время на сервере</f:facet>
+               <h:outputText value="#{data.serverTime}"/>
+            </h:column>
+         </h:dataTable>
+         <div class="link-container">
+            <h:link styleClass="link" outcome="goToIndex">
+              На стартовую страницу
+            </h:link>
+         </div>
       </div>
+      <h:form styleClass="hidden">
+         <h:inputText id="hidden-x" value="#{requests.dataBean.x}" styleClass="hidden"/>
+         <h:inputText id="hidden-y" value="#{requests.dataBean.y}" styleClass="hidden"/>
+         <h:inputText id="hidden-r" value="#{requests.dataBean.r}" styleClass="hidden"/>
+         <h:commandButton value="Отправить" id="hidden-form" styleClass="hidden">
+            <f:ajax execute="@form" listener="#{requests.addData()}" render="table"/>
+         </h:commandButton>
+      </h:form>
+
       <h:outputScript name="js/canvas.js"/>
       <h:outputScript name="js/mouseEvent.js"/>
       <h:outputScript name="js/index.js"/>
+      <h:outputScript name="js/drawDots.js"/>
    </ui:define>
 </ui:composition>
 </html>

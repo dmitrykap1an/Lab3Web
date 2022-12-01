@@ -2,14 +2,16 @@ package beans
 
 import jakarta.persistence.*
 import java.io.Serializable
+import java.sql.Timestamp
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Entity(name = "DataBean")
 @Table(name = "datatable")
 class DataBean: Serializable{
 
     @Id
-    @SequenceGenerator(name = "jpaSequence", sequenceName = "JPA_SEQUENCE", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private var id = 1;
 
     @Column(name = "x")
@@ -20,6 +22,11 @@ class DataBean: Serializable{
     private var r: Double? = null
     @Column(name = "hitresult")
     private var hitResult: Boolean? = null
+    @Column(name = "serverTime")
+    private var serverTime: String? = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")).toString()
+    @Column(name = "executeTime")
+    private var executeTime: Long = System.nanoTime()
+
     
     fun getX() =
         x;
@@ -40,6 +47,20 @@ class DataBean: Serializable{
 
     fun setR(r: Double?){
         this.r = r;
+    }
+
+    fun getServerTime() =
+        serverTime
+
+    fun setServerTime(serverTime: String){
+        this.serverTime = serverTime
+    }
+
+    fun getExecuteTime()
+        = executeTime
+
+    fun setExecuteTime(executeTime: Long){
+        this.executeTime = executeTime
     }
 
     private fun checkSuccess(): Boolean{
@@ -66,6 +87,10 @@ class DataBean: Serializable{
 
     fun setHitResult(hitResult: Boolean) {
         this.hitResult = hitResult
+    }
+
+    override fun toString(): String {
+        return "DataBean(id: $id, x: $x, y: $y, r: $r, hitResult :$hitResult"
     }
     
 }

@@ -25,10 +25,11 @@
             <p class="margin_text"><b>Вариант</b>: 13153</p>
         </div>
         <div class="link-container">
-            <a href="#{request.contextPath}/main.xhtml" class="link">На основную страницу</a>
+            <h:link styleClass="link" outcome="goToMain">
+                На основную страницу
+            </h:link>
         </div>
 
-        <h:outputScript name="js/time.js"/>
     </ui:define>
 </ui:composition>
 

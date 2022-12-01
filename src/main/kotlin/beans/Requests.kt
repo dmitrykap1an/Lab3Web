@@ -32,7 +32,11 @@ class Requests: Serializable {
                 transaction!!.begin()
                 val query: Query = entityManager!!.createQuery("SELECT u FROM DataBean u")
                 list = query.resultList as MutableList<DataBean>
+                entityManager!!.flush()
                 transaction!!.commit()
+                list.forEach{
+                    println(it.toString())
+                }
             } catch (e : RuntimeException) {
                 if (transaction!!.isActive) {
                     transaction!!.rollback()
@@ -45,19 +49,22 @@ class Requests: Serializable {
         try {
             transaction!!.begin()
             dataBean.checkHit()
+            dataBean.setExecuteTime((System.nanoTime() - dataBean.getExecuteTime())/1000000)
             entityManager!!.persist(dataBean)
             list.add(dataBean)
             dataBean = DataBean()
+            entityManager!!.flush()
             transaction!!.commit()
         } catch (e: RuntimeException) {
             if (transaction!!.isActive) {
                 transaction!!.rollback()
             }
+            println("ошибочка вышла")
             throw e
         }
     }
 
-    fun clearData(): String{
+    fun clearData(){
         try {
             transaction!!.begin()
             val query = entityManager!!.createQuery("DELETE FROM DataBean")
@@ -70,12 +77,11 @@ class Requests: Serializable {
             }
             throw exception
         }
-        return "redirect"
     }
 
 
-    fun getData(): MutableList<DataBean> {
-        return list
+    fun getData(): List<DataBean> {
+        return list.reversed()
     }
 
     fun setData(list: MutableList<DataBean>) {
