@@ -1,8 +1,8 @@
 package beans
 
 import jakarta.persistence.*
+import java.io.FileDescriptor
 import java.io.Serializable
-import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -12,7 +12,7 @@ class DataBean: Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private var id = 1;
+    private var id: Long = 1;
 
     @Column(name = "x")
     private var x: Double? = null;
@@ -20,14 +20,14 @@ class DataBean: Serializable{
     private var y: Double? = null
     @Column(name = "r")
     private var r: Double? = null
-    @Column(name = "hitresult")
+    @Column(name = "hit_result")
     private var hitResult: Boolean? = null
-    @Column(name = "serverTime")
+    @Column(name = "server_time")
     private var serverTime: String? = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")).toString()
-    @Column(name = "executeTime")
+    @Column(name = "execute_time")
     private var executeTime: Long = System.nanoTime()
 
-    
+
     fun getX() =
         x;
 
@@ -57,27 +57,18 @@ class DataBean: Serializable{
     }
 
     fun getExecuteTime()
-        = executeTime
+            = executeTime
 
     fun setExecuteTime(executeTime: Long){
         this.executeTime = executeTime
     }
 
-    private fun checkSuccess(): Boolean{
-        return (x!! <= 0 && x!! >= -r!! && y!! >= 0 && y!! <= r!!/2) || //проверка на попадание в квадрат
-                (x!! >= 0 && y!! <= 0 && x!! * x!! + y!! * y!! <= (r!!/2) * (r!!/2)) || //проверка на попадание в четверть окружности
-                (y!! >= -x!! - r!! && y!! <= 0 && x!! <= 0) //проверка на попадание в треугольник
-    }
 
-    fun checkHit() {
-        hitResult = checkSuccess()
-    }
-
-    fun getId(): Int {
+    fun getId(): Long {
         return id
     }
 
-    fun setId(id: Int) {
+    fun setId(id: Long) {
         this.id = id
     }
 
@@ -92,5 +83,5 @@ class DataBean: Serializable{
     override fun toString(): String {
         return "DataBean(id: $id, x: $x, y: $y, r: $r, hitResult :$hitResult"
     }
-    
+
 }

@@ -53,6 +53,20 @@
                   <f:validateRequired/>
                </h:selectOneRadio>
             </div>
+            <hr/>
+            <div class="block_description">Выбор Вида точки(выберете одну)</div>
+            <div>
+               <h:outputLabel value="Количество ног паука-точки: "/>
+               <h:inputText id="dot-spider-text" maxlength="5" autocomplete="off" value="#{requests.dotSpider.numberOfLegs}">
+                  <f:validateDoubleRange minimum="-5" maximum="5"/>
+                  <f:validateRequired/>
+               </h:inputText>
+               <h:outputLabel value="Длина усиков муравья-точки: "/>
+               <h:inputText id="dot-ant-text" maxlength="5" autocomplete="off" value="#{requests.dotAnt.mustacheLength}">
+                  <f:validateDoubleRange minimum="-5" maximum="5"/>
+                  <f:validateRequired/>
+               </h:inputText>
+            </div>
             <div>
                <h:commandButton value="Отправить" id="form">
                   <f:ajax execute="@form" listener="#{requests.addData()}" render="table"/>

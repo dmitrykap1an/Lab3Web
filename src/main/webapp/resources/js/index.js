@@ -5,25 +5,31 @@ const xButtons = [document.getElementById("j_idt8:x-select:0"), document.getElem
         document.getElementById("j_idt8:x-select:8")],
     rButtons = [document.getElementById("j_idt8:r-select:0"), document.getElementById("j_idt8:r-select:1"),
         document.getElementById("j_idt8:r-select:2"), document.getElementById("j_idt8:r-select:3"),
-        document.getElementById("j_idt8:r-select:4")]
-    yButton = document.getElementById("j_idt8:y-text")
-    form = document.getElementById("j_idt8:form")
+        document.getElementById("j_idt8:r-select:4")],
+    yButton = document.getElementById("j_idt8:y-text"),
+    dotSpider = document.getElementById("j_idt8:dot-spider-text"),
+    dotAnt = document.getElementById("j_idt8:dot-ant-text"),
+    submit = document.getElementById("j_idt8:form")
 
-form.addEventListener("click",onsubmit);
 
+
+
+submit.addEventListener("click", onsubmit)
 
 function onsubmit(){
+    let dots = validateDots()
     let x = checkX()
     let y = validateY()
     let r = checkR()
-    let array = [x, y, r]
-    if(!x.status || !y.status || !r.status){
+    let array = [x, y, r, dots]
+    if(!x.status || !y.status || !r.status || !dots.status){
         let errorString = ""
         array.forEach(function (input){
             if(!input.status){
                 errorString += input.errorMessage + "\n"
             }
         })
+
         alert(errorString)
     }
     else{
@@ -31,6 +37,45 @@ function onsubmit(){
     }
 
     return false;
+}
+
+function validateDots(){
+    let spider = validateField(dotSpider)
+    let ant = validateField(dotAnt)
+    let bool = spider.status ^ ant.status
+    if(bool){
+        return {
+            status: bool,
+            errorMessage: ""
+        }
+    }
+    else{
+        dotSpider.value = ""
+        dotAnt.value = ""
+        return{
+            status: bool,
+            errorMessage: "Поле о точке должно быть пустым или представлять из себя число"
+        }
+    }
+}
+
+function validateField(field){
+    let value = field.value.replace(",", ".")
+    if(!isNaN(value) && value !== ""){
+        return{
+            status: true,
+            val: Math.round(parseFloat(value)),
+            errorMessage: ""
+        }
+    }
+    else{
+        return {
+            status: false,
+            val: 404,
+            errorMessage: "Поле с вводом данных о точке должно быть заполнено!"
+        }
+    }
+
 }
 
 function validateY(){

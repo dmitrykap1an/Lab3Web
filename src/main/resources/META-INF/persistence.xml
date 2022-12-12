@@ -6,10 +6,12 @@
     <persistence-unit name="Web3">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>beans.DataBean</class>
-        <class>beans.Requests</class>
+        <class>beans.DotSpider</class>
+        <class>beans.DotAnt</class>
+        <class>beans.Dot</class>
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/web"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://kaplaan-postgres/web"/>
             <property name="jakarta.persistence.jdbc.user" value="web"/>
             <property name="jakarta.persistence.jdbc.password" value="web"/>
             <property name="dialect" value="org.hibernate.dialect.PostgreSQL94Dialect"/>

@@ -5,4 +5,6 @@
                  version="3.0">
     <package>beans</package>
     <entity class="beans.DataBean"/>
+    <entity class="beans.DotAnt"/>
+    <entity class="beans.DotSpider"/>
 </entity-mappings>
